@@ -1,11 +1,10 @@
-// i2c_master.h
-//
-// USI (or Universal Serial Interface) specific functions
-// Covers I²C (2-wire) protocol as master
-//
-// Copyright 2015 - 2017 (C) Taz8du29
-// Refer to LICENSE.MD for more infos about copyright
-
+/* glcd_ssd1306.h
+ *
+ * Drivers for the SSD1306 driven LCD displays, over I²C
+ *
+ * Copyright 2015 - 2017 (C) Taz8du29
+ * Refer to LICENSE.MD for more infos about copyright
+*/
 
 
 #ifndef _GLCD_SSD1306_H_
