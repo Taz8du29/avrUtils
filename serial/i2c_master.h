@@ -26,8 +26,8 @@
 #define i2c_Mode_1BIT 0b11101110
 #define i2c_Mode_8BIT 0b11101000
 
-// Function used to craft the first data byte made of the slave's address and
-// the R/W bit.
+// First data byte crafting function.
+// Uses the slave's address and the R/W bit.
 #define i2c_slaveAddr(addr, mode) ((addr<<1) | mode)
 
 

@@ -30,7 +30,7 @@
 //#define fresc_enable
 
 // #define harduart_enable
-#define softUart_enable
+// #define softUart_enable
 
 #define i2c_master_enable
 // #define i2c_slave_enable
@@ -161,7 +161,7 @@ typedef enum {false, true} bool;
 #define sq(x) (x * x)
 #define cb(x) (x * x * x)
 
-// If LSB is set, var is Odd, else var is Even
+// If LSB is set, `var` is Odd, otherwise `var` is Even
 #define isOdd(var)	((var & 0x01) ? true : false)
 #define isEven(var)	((var & 0x01) ? false : true)
 
@@ -171,6 +171,7 @@ unsigned long power(uint8_t a, uint8_t x) {
 	return result;
 }
 
+// Returns factorial of the given 8-bit integer.
 unsigned long fact(uint8_t a) {
 	// Pre-computed factorials for : 0 <= a <= 8
 	const uint16_t fact[9] = {0, 1, 2, 6, 24, 120, 720, 5040, 40320};
@@ -279,31 +280,31 @@ unsigned long fact(uint8_t a) {
  * components is achieved by editing their specific register.
 */
 
-#define disable_all()		PRR = 0xFF; disable_AC();
-#define enable_all()		PRR = 0x00; enable_AC();
+#define pwr_disable_all()		PRR = 0xFF; disable_AC();
+#define pwr_enable_all()		PRR = 0x00; enable_AC();
 
-#define disable_timer0()	sbi(PRR, PRTIM0);
-#define enable_timer0()		cbi(PRR, PRTIM0);
+#define pwr_disable_timer0()	sbi(PRR, PRTIM0);
+#define pwr_enable_timer0()		cbi(PRR, PRTIM0);
 
-#define disable_timer1()	sbi(PRR, PRTIM1);
-#define enable_timer1()		cbi(PRR, PRTIM1);
+#define pwr_disable_timer1()	sbi(PRR, PRTIM1);
+#define pwr_enable_timer1()		cbi(PRR, PRTIM1);
 
-#define disable_USI()		sbi(PRR, PRUSI);
-#define enable_USI()		cbi(PRR, PRUSI);
+#define pwr_disable_USI()		sbi(PRR, PRUSI);
+#define pwr_enable_USI()		cbi(PRR, PRUSI);
 
-#define disable_USART()		sbi(PRR, PRUSART);
-#define enable_USART()		cbi(PRR, PRUSART);
+#define pwr_disable_USART()		sbi(PRR, PRUSART);
+#define pwr_enable_USART()		cbi(PRR, PRUSART);
 
 // AC is analog comparator
-#define disable_AC()		sbi(ACSR, ACD);
-#define enable_AC()			cbi(ACSR, ACD);
+#define pwr_disable_AC()		sbi(ACSR, ACD);
+#define pwr_enable_AC()			cbi(ACSR, ACD);
 
-#define disable_watchdog()	cbi(WDTCR, WDE); cbi(WDTCR, WDIE);
-#define enable_watchdog()	sbi(WDTCR, WDE); sbi(WDTCR, WDIE);
+#define pwr_disable_watchdog()	cbi(WDTCR, WDE); cbi(WDTCR, WDIE);
+#define pwr_enable_watchdog()	sbi(WDTCR, WDE); sbi(WDTCR, WDIE);
 
 // en/disable brown-out detector
-// #define disable_BOD()	sbi(??, ??);
-// #define enable_BOD()		cbi(??, ??);
+// #define pwr_disable_BOD()	sbi(??, ??);
+// #define pwr_enable_BOD()		cbi(??, ??);
 
 
 
@@ -458,7 +459,6 @@ void pwm_pin1B(uint16_t val) {
 
 	// Then setup the compare match value and reset counter
 	OCR1B = val;
-	//TCNT1 = 0x0000;
 
 	// Enable interrupts
 	#ifdef using_interrupts
@@ -481,34 +481,6 @@ void pwm_pin1B(uint16_t val) {
 
 // No operation
 #define nop() asm("nop");
-
-
-// Swaps low and high nibble of an 8 bits register.
-
-//#define swap(var) ({ asm("swap %0" : "r" (var) : "0" (var)); var; })
-
-/*
-__asm__ (					\
-		"mov __tmp_reg__,%0" "\n\t"		\
-		"swap %0" "\n\t"			\
-		"eor %0,__tmp_reg__" "\n\t"		\
-		"mov __tmp_reg__,%0" "\n\t"		\
-		"lsr %0" "\n\t"				\
-		"lsr %0" "\n\t"				\
-		"eor %0,__tmp_reg__" 			\
-		: "=r" (__t)				\
-		: "0" ((unsigned char)(val))		\
-		: "r0"
-);
-
-*/
-
-/*
-char swap(char var) {
-	asm("swap %0" : "=r" (var) : "M" (var));
-	return var;
-}
-*/
 
 
 
