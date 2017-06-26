@@ -13,6 +13,19 @@
 
 
 /*******************************
+ * INTERRUPTS
+*******************************/
+
+// If you are using interrupts, it is recommended to disable them during
+// operations on 16 bits registers. Just uncomment the "pwm_interrupts" line
+// and every function using 16 bits registers will disable interrupts long
+// enough to operate.
+
+// #define using_interrupts 1
+
+
+
+/*******************************
  * SHIFTING
 *******************************/
 
@@ -26,6 +39,31 @@
 #define shift_CLK	PD1		//  SRCLK		CLK
 #define shift_LD	PD2		//  RCLK		SH/_LD
 #define shift_IOE	PB3		//  _OE			CLK INH
+
+
+
+/*******************************
+ * FUSERESC
+*******************************/
+
+/* DO NOT CHANGE PINS AND PORTS. */
+
+// Target's enable pin
+#define fresc_OE PD0
+
+// This pins must be in that order !!! Otherwise some functions won't work
+#define fresc_WR	PD2	 // Write clock
+#define fresc_BS1	PD3	 // Byte select 1 OR Page Load
+#define fresc_XA0	PD4	 // Xtal Action bit 0
+#define fresc_XA1	PD5	 // Xtal Action bit 1 OR Byte select 2
+
+// Input pin used to read target's status
+#define fresc_RDY PD6
+
+// PA0 is used to power the target with 5V
+// PA1 controls the 12V transistor for the reset pin
+#define fresc_POW PA0
+#define fresc_RES PA1
 
 
 
@@ -90,6 +128,9 @@
 // SCL (clock)
 #define i2c_SCL_BIT PB7
 
+// transfer modes
+#define i2c_WRITE 0
+#define i2c_READ  1
 
 // Device's address, in slave mode (change it if you desire)
 #define i2c_address 0x69
@@ -161,4 +202,4 @@
 
 
 
-#endif
+#endif	/* !_MYUTILS_CONFIG_H_ */

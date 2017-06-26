@@ -175,7 +175,7 @@ unsigned long fact(uint8_t a) {
 	// Pre-computed factorials for : 0 <= a <= 8
 	const uint16_t fact[9] = {0, 1, 2, 6, 24, 120, 720, 5040, 40320};
 
-	if(a < 9) {
+	if ( a < 9 ) {
 		return (long)fact[a];
 	}
 	else {
@@ -364,7 +364,7 @@ unsigned long fact(uint8_t a) {
 #define flag_clr_zero() asm("cez");
 
 // Save/restore SREG state
-#define saveSREG()		int _sreg_temp_ = SREG;
+#define saveSREG()		uint8_t _sreg_temp_ = SREG;
 #define restoreSREG()	SREG = _sreg_temp_;
 
 
@@ -414,9 +414,6 @@ void pwm_pin0B(uint8_t val) {
  * Compare match of OCR1A outputs on pin1A, compare match of OCR1B on pin1B.
  * The PWM resolution is 10 bits (0 -> 1023).
  *
- * If you are using interrupts, it is recommended to disable them during
- * operations on 16 bits registers. Just uncomment the "pwm_interrupts" line.
- *
  * Settings :
  * - Fast-PWM mode - 10 bits, TOP = 0x03FF (WGM13:0 = 0111)
  * - IO clock source, no prescaler (CS12:0 = 001)
@@ -425,15 +422,13 @@ void pwm_pin0B(uint8_t val) {
  * Read datasheet for more infos
 */
 
-// #define pwm_interrupts 1
-
 void pwm_pin1A(uint16_t val) {
 	// Apply settings (0xFF is a mask for other settings)
 	TCCR1A &= (1<<COM1A1) | (3<<WGM10) | 0xFF;
 	TCCR1B = (1<<WGM12) | (1<<CS10);
 
 	// Disable interrupts for 16 bits operations
-	#ifdef pwm_interrupts
+	#ifdef using_interrupts
 		saveSREG();
 		cli();
 	#endif
@@ -442,7 +437,7 @@ void pwm_pin1A(uint16_t val) {
 	OCR1A = val;
 
 	// Enable interrupts
-	#ifdef pwm_interrupts
+	#ifdef using_interrupts
 		restoreSREG();
 	#endif
 
@@ -456,7 +451,7 @@ void pwm_pin1B(uint16_t val) {
 	TCCR1B = (1<<WGM12) | (1<<CS10);
 
 	// Disable interrupts for 16 bits operations
-	#ifdef pwm_interrupts
+	#ifdef using_interrupts
 		saveSREG();
 		cli();
 	#endif
@@ -466,7 +461,7 @@ void pwm_pin1B(uint16_t val) {
 	//TCNT1 = 0x0000;
 
 	// Enable interrupts
-	#ifdef pwm_interrupts
+	#ifdef using_interrupts
 		restoreSREG();
 	#endif
 
