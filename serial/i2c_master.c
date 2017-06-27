@@ -18,7 +18,7 @@
 
 void i2c_init(void) {
 	// Two wire mode and software clock source
-	USICR = (1<<USIWM1) | 0x00;
+	USICR = (10<<USIWM0) | 0x00;
 
 	// Clearing all flags, counter = 0
 	USISR = (1<<USISIF) | (1<<USIOIF) | (1<<USIPF) | 0x00;
@@ -51,12 +51,12 @@ void i2c_start(void) {
 void i2c_stop(void) {
 	// Set SCL and wait
 	sbi(USICR, USITC);
-	_delay_us(1);
-	//while(!readBit(i2c_PIN, i2c_SCL_BIT));
+	_delay_us(2);
+	//while ( !readBit(i2c_PIN, i2c_SCL_BIT) );
 
 	// Set SDA
 	USIDR = 0xFF;
-	//while(!readBit(i2c_PIN, i2c_SDA_BIT));
+	//while ( !readBit(i2c_PIN, i2c_SDA_BIT) );
 }
 
 
@@ -92,7 +92,7 @@ uint8_t i2c_transfert(uint8_t countMask) {
 bool i2c_checkAck(void) {
 	// Rising edge on SCL
 	sbi(USICR, USITC);
-	_delay_us(1);
+	_delay_us(2);
 
 	// Save bit state into var
 	bool bitState = readBit(i2c_PIN, i2c_SDA_BIT);
@@ -110,7 +110,7 @@ void i2c_send(uint8_t *data) {
 	i2c_start();
 
 	// Write data. First byte MUST be slave address and R/W bit
-	// Use the i2c_slaveAddr() function to craft this byte.
+	// Use i2c_addrByte(address, mode) function to craft this byte.
 	while ( *data ) {
 		// Set Data Rgister, then shift it out
 		USIDR = *data++;

@@ -28,7 +28,7 @@
 
 // First data byte crafting function.
 // Uses the slave's address and the R/W bit.
-#define i2c_slaveAddr(addr, mode) ((addr<<1) | mode)
+#define i2c_addrByte(addr, mode) ((addr<<1) | mode)
 
 
 

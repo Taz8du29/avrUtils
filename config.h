@@ -30,15 +30,15 @@
 *******************************/
 
 // All pins must be on the same port
-#define shift_DIR	DDRB
-#define shift_PORT	PORTB
-#define shift_PIN	PINB
+#define shift_DIR	DDRD
+#define shift_PORT	PORTD
+#define shift_PIN	PIND
 
 //		Pin Name	Pin			HC595		HC165
-#define shift_DATA	PD0		//  SER			Qh
-#define shift_CLK	PD1		//  SRCLK		CLK
-#define shift_LD	PD2		//  RCLK		SH/_LD
-#define shift_IOE	PB3		//  _OE			CLK INH
+#define shift_DATA	PD3		//  SER			Qh
+#define shift_CLK	PD4		//  SRCLK		CLK
+#define shift_LD	PD5		//  RCLK		SH/_LD
+#define shift_IOE	PD6		//  _OE			CLK INH
 
 
 
@@ -46,13 +46,16 @@
  * FUSERESC
 *******************************/
 
-/* DO NOT CHANGE PINS AND PORTS. */
+/* DO NOT EDIT THIS PINS AND PORTS CONFIG. */
 
 // Target's enable pin
 #define fresc_OE PD0
 
-// This pins must be in that order !!! Otherwise some functions won't work
-#define fresc_WR	PD2	 // Write clock
+// Clock pin (XTAL1)
+#define fresc_CLK	PD1
+
+// Prog_enable = [WR, BS1, XA0, XA1];
+#define fresc_WR	PD2	 // Write pulse
 #define fresc_BS1	PD3	 // Byte select 1 OR Page Load
 #define fresc_XA0	PD4	 // Xtal Action bit 0
 #define fresc_XA1	PD5	 // Xtal Action bit 1 OR Byte select 2
@@ -60,10 +63,9 @@
 // Input pin used to read target's status
 #define fresc_RDY PD6
 
-// PA0 is used to power the target with 5V
-// PA1 controls the 12V transistor for the reset pin
-#define fresc_POW PA0
-#define fresc_RES PA1
+// Power control of the target chip
+#define fresc_POW PA0	// 5Vcc
+#define fresc_RES PA1	// 12Vcc aka Reset
 
 
 
