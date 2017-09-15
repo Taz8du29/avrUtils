@@ -177,7 +177,7 @@ unsigned long fact(uint8_t a) {
 	const uint16_t fact[9] = {0, 1, 2, 6, 24, 120, 720, 5040, 40320};
 
 	if ( a < 9 ) {
-		return (long)fact[a];
+		return (unsigned long) fact[a];
 	}
 	else {
 		unsigned long result = 1;

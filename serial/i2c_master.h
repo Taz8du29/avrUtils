@@ -42,7 +42,7 @@ static inline void i2c_start(void) __attribute__((always_inline));
 static inline void i2c_stop(void) __attribute__((always_inline));
 
 // Loop for sending 1 or 8 bits (it also returns data register's content)
-static inline uint8_t i2c_transfert(char countMask) __attribute__((always_inline));
+static inline uint8_t i2c_transfert(uint8_t countMask) __attribute__((always_inline));
 
 // Functions that checks slave's Ack
 static inline bool i2c_checkAck(void) __attribute__((always_inline));

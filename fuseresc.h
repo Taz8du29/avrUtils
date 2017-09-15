@@ -1,7 +1,7 @@
 /* fuseresc.h
  *
  * Small program to recover bad fuse configurations
- * Supported chips : Attiny 2313A/4313, Atmega 328P
+ * Supported chips : Attiny 2313a/4313, Atmega 328P
  *
  * Copyright 2015 - 2017 (C) Taz8du29
  * Refer to LICENSE.MD for more infos about copyright
