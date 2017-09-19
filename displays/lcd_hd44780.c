@@ -35,7 +35,7 @@ void lcd_init(void) {
 		// 8 bits mode, 2 lines of 8x5 matrixes
 		lcd_write(CMD, 0x38);
 		lcd_wait();
-	#else // lcd_mode == 4
+	#else
 		// Set data port as output
 		lcd_DATA_DIR |= 0xF0;
 		lcd_DATA_PORT &= 0x0F;
@@ -69,57 +69,49 @@ void lcd_pulse(void) {
 }
 
 
-#if ( lcd_mode == 8 )
+void lcd_write(uint8_t mode, uint8_t cmd) {
+	#if ( lcd_mode == 8 )
+		// Whole port (8 bits/pins) as output
+		setPortOut(lcd_DATA_DIR);
+	#else
+		// Half port (4 upper bits/pins) as output
+		lcd_DATA_DIR |= 0xF0;
+	#endif
 
-void lcd_write(bool mode, uint8_t cmd) {
-	setPortOut(lcd_DATA_DIR);
+	// Write mode -> RW pin low
 	cbi(lcd_CMD_PORT, lcd_RW);
 
 	if( mode ) { sbi(lcd_CMD_PORT, lcd_RS); }
 	else { cbi(lcd_CMD_PORT, lcd_RS); }
 
-	lcd_DATA_PORT = cmd;
-	lcd_pulse();
+	// Output data on PORTx register
+	// Then pulse EN pin, that way lcd loads data
+	#if ( lcd_mode == 8 )
+		lcd_DATA_PORT = cmd;
+		lcd_pulse();
+	#else
+		// Four lower bits
+		lcd_DATA_PORT &= 0x0F;
+		lcd_DATA_PORT |= (cmd & 0xF0);
+		lcd_pulse();
+
+		// Four upper bits
+		lcd_DATA_PORT &= 0x0F;
+		lcd_DATA_PORT |= ((cmd<<4) & 0xF0);
+		lcd_pulse();
+	#endif
 }
 
-uint8_t lcd_read(bool mode) {
-	setPortIn(lcd_DATA_DIR);
-	sbi(lcd_CMD_PORT, lcd_RW);
+uint8_t lcd_read(uint8_t mode) {
+	#if ( lcd_mode == 8 )
+		// Whole port (8 bits/pins) as input
+		setPortIn(lcd_DATA_DIR);
+	#else
+		// Half port (4 upper bits/pins) as output
+		lcd_DATA_DIR &= 0x0F;
+	#endif
 
-	if( mode ) { sbi(lcd_CMD_PORT, lcd_RS); }
-	else { cbi(lcd_CMD_PORT, lcd_RS); }
-
-	uint8_t outbyte = 0x00;
-
-	lcd_pulse();
-	outbyte |= lcd_DATA_PIN;
-
-	return outbyte;
-}
-
-#else // lcd_mode == 4
-
-void lcd_write(bool mode, uint8_t cmd) {
-	lcd_DATA_DIR &= 0x0F;
-	lcd_DATA_DIR |= 0xF0;
-
-	cbi(lcd_CMD_PORT, lcd_RW);
-
-	if ( mode ) { sbi(lcd_CMD_PORT, lcd_RS); }
-	else { cbi(lcd_CMD_PORT, lcd_RS); }
-
-	lcd_DATA_PORT &= 0x0F;
-	lcd_DATA_PORT |= (cmd & 0xF0);
-	lcd_pulse();
-
-	lcd_DATA_PORT &= 0x0F;
-	lcd_DATA_PORT |= ((cmd<<4) & 0xF0);
-	lcd_pulse();
-}
-
-uint8_t lcd_read(bool mode) {
-	lcd_DATA_DIR &= 0x0F;
-
+	// Read mode -> RW pin high
 	sbi(lcd_CMD_PORT, lcd_RW);
 
 	if ( mode ) { sbi(lcd_CMD_PORT, lcd_RS); }
@@ -127,15 +119,20 @@ uint8_t lcd_read(bool mode) {
 
 	uint8_t outbyte = 0x00;
 
-	lcd_pulse();
-	outbyte |= (lcd_DATA_PIN & 0xF0);
-	lcd_pulse();
-	outbyte |= ((lcd_DATA_PIN & 0xF0)<<4);
+	// Pulse EN pin, that way lcd outputs data
+	// then save from PINx register
+	#if ( lcd_mode == 8 )
+		lcd_pulse();
+		outbyte |= lcd_DATA_PIN;
+	#else
+		lcd_pulse();
+		outbyte |= (lcd_DATA_PIN & 0xF0);
+		lcd_pulse();
+		outbyte |= ((lcd_DATA_PIN & 0xF0)<<4);
+	#endif
 
 	return outbyte;
 }
-
-#endif	/* !lcd_mode */
 
 
 void lcd_print(uint8_t* str, uint8_t line, uint8_t col) {
@@ -153,7 +150,6 @@ void lcd_print(uint8_t* str, uint8_t line, uint8_t col) {
 		lcd_wait();
 	}
 }
-
 
 
 #endif	/* !_LCD_HD44780_C_ */
