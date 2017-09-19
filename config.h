@@ -74,21 +74,21 @@
 *******************************/
 
 // Pin configuration
-#define harduart_DIR	DDRD
-#define harduart_PORT	PORTD
-#define harduart_PIN	PD6
+#define uart_hard_DIR	DDRD
+#define uart_hard_PORT	PORTD
+#define uart_hard_PIN	PD6
 
 
 // Frame formats (Uncomment wanted one)
 
-#define harduart_BITS_PARITY (0<<UPM0)		// No parity bit
-// #define harduart_BITS_PARITY (2<<UPM0)	// Even parity
-// #define harduart_BITS_PARITY (3<<UPM0)	// Odd parity
+#define uart_hard_BITS_PARITY (0<<UPM0)		// No parity bit
+// #define uart_hard_BITS_PARITY (2<<UPM0)	// Even parity
+// #define uart_hard_BITS_PARITY (3<<UPM0)	// Odd parity
 
-#define harduart_BITS_STOP (0<<USBS)		// One stop bit
-// #define harduart_BITS_STOP (1<<USBS)		// Two stop bits
+#define uart_hard_BITS_STOP (0<<USBS)		// One stop bit
+// #define uart_hard_BITS_STOP (1<<USBS)		// Two stop bits
 
-#define harduart_BITS_DATA 8				// 5,6,7,8 or 9 bits
+#define uart_hard_BITS_DATA 8				// 5,6,7,8 or 9 bits
 
 
 
@@ -97,12 +97,12 @@
 *******************************/
 
 // Pin configuration
-#define softuart_DIR	DDRD
-#define softuart_PORT	PORTD
-#define softuart_PIN	PIND
+#define uart_soft_DIR	DDRD
+#define uart_soft_PORT	PORTD
+#define uart_soft_PIN	PIND
 
-#define softuart_RX_BIT PD5
-#define softuart_TX_BIT PD6
+#define uart_soft_RX_BIT PD5
+#define uart_soft_TX_BIT PD6
 
 
 

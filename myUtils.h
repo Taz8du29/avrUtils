@@ -29,8 +29,8 @@
 
 //#define fresc_enable
 
-// #define harduart_enable
-// #define softUart_enable
+// #define uart_hard_enable
+// #define uart_soft_enable
 
 #define i2c_master_enable
 // #define i2c_slave_enable
@@ -489,12 +489,12 @@ void pwm_pin1B(uint16_t val) {
 
 
 // UART
-#ifdef softUart_enable
-	#include "serial/softUart.h"
+#ifdef uart_soft_enable
+	#include "serial/uart_soft.h"
 #endif
 
-#ifdef harduart_enable
-	#include "serial/hardUart.h"
+#ifdef uart_hard_enable
+	#include "serial/uart_hard.h"
 #endif
 
 
