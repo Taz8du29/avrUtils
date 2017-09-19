@@ -13,9 +13,7 @@
 
 /* DEPENDENCIES */
 
-#ifndef _MYUTILS_H_
-	#error This file needs the following dependencies : myUtils
-#endif
+#include "myUtils.h"
 
 
 
@@ -63,7 +61,8 @@ static inline void lcd_print(uint8_t* str, uint8_t line, uint8_t col) __attribut
 
 
 /* LCD DISPLAY FUNCTIONS */
-#include "lcd_hd44780.c"
+
+#include "displays/lcd_hd44780.c"
 
 
 #endif	/* !_LCD_HD44780_H_ */

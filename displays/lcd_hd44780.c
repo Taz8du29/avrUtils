@@ -10,7 +10,7 @@
 #ifndef _LCD_HD44780_C_
 #define _LCD_HD44780_C_
 
-#include "lcd_hd44780.h"
+#include "displays/lcd_hd44780.h"
 
 
 /* LCD DISPLAY FUNCTIONS */

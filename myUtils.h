@@ -520,7 +520,7 @@ void pwm_pin1B(uint16_t val) {
 
 // LCDs
 #ifdef lcd_hd44780_enable
-	#include "lcd_hd44780.h"
+	#include "displays/lcd_hd44780.h"
 #endif
 
 

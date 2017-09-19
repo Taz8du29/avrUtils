@@ -14,7 +14,9 @@
 
 /* DEPENDENCIES */
 
-#if !defined( _MYUTILS_H_ ) || !defined ( _UTIL_DELAY_H_ )
+#include "myUtils.h"
+
+#if !defined ( _UTIL_DELAY_H_ )
 	#error This file needs the following dependencies : myUtils, avr/util/delay
 #endif
 
@@ -54,7 +56,8 @@ static inline uint8_t i2c_receive(uint8_t addr, uint8_t *data, uint8_t dataLen) 
 
 
 /* I²C MASTER FUNCTIONS */
-#include "i2c_master.c"
+
+#include "serial/i2c_master.c"
 
 
 #endif	/* !_I2C_MASTER_H_ */

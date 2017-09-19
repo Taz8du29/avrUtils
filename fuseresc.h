@@ -12,12 +12,9 @@
 #define _FUSE_RESCUE_H_
 
 
-/* REQUIREMENTS */
+/* DEPENDENCIES */
 
-#ifndef _MYUTILS_H_
-	#error This file needs the following dependencies : myUtils
-#endif
-
+#include "myUtils.h"
 
 
 /* CHIPS DEFAULT FUSES */

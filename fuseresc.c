@@ -20,15 +20,12 @@ void fresc_init(void) {
 	// All ports as output
 	// Prog_enable[] bits at 0000
 	// Reset, 5Vcc and CLK pins LOW (0V)
-	setPortOut(PORTA);
-	PORTA = 0x00;
-	setPortOut(PORTB);
-	PORTB = 0x00;
-	setPortOut(PORTD);
-	PORTD = 0x00;
+	setPortOut(DDRA); PORTA = 0x00;
+	setPortOut(DDRB); PORTB = 0x00;
+	setPortOut(DDRD); PORTD = 0x00;
 
 	// Excepted the status pin
-	setDirIn(PORTD, fresc_RDY);
+	setPinIn(PORTD, fresc_RDY);
 
 	// Output enable (!OE) HIGH
 	sbi(PORTD, fresc_OE);

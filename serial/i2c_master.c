@@ -11,7 +11,7 @@
 #ifndef _I2C_MASTER_C_
 #define _I2C_MASTER_C_
 
-#include "i2c_master.h"
+#include "serial/i2c_master.h"
 
 
 /* I²C MASTER FUNCTIONS */
