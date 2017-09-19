@@ -54,8 +54,8 @@ static inline void lcd_pulse(void) __attribute__((always_inline));
 
 // Read from and Write to the display
 // Structure is both for 8 and 4 bits functions
-static inline void lcd_write(bool mode, uint8_t cmd) __attribute__((always_inline));
-static inline uint8_t lcd_read(bool mode) __attribute__((always_inline));
+static inline void lcd_write(uint8_t mode, uint8_t cmd) __attribute__((always_inline));
+static inline uint8_t lcd_read(uint8_t mode) __attribute__((always_inline));
 
 // User-leveled functions : displays string on LCD
 static inline void lcd_print(uint8_t* str, uint8_t line, uint8_t col) __attribute__((always_inline));

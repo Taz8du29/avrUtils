@@ -34,7 +34,7 @@ void shift_init(void) {
 
 uint8_t shift_in(void) {
 	// Set data pin as input
-	setDirIn(shift_DIR, shift_DATA);
+	setPinIn(shift_DIR, shift_DATA);
 
 	// Save data on the chip
 	cbi(shift_PORT, shift_LD);
@@ -60,7 +60,7 @@ uint8_t shift_in(void) {
 
 void shift_out(uint8_t inbyte) {
 	// Set data pin as output
-	setDirOut(shift_DIR, shift_DATA);
+	setPinOut(shift_DIR, shift_DATA);
 	cbi(shift_PORT, shift_LD);
 
 	// Put HC's pins in Hi Z

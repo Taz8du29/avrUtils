@@ -45,7 +45,7 @@ static inline void i2c_stop(void) __attribute__((always_inline));
 static inline uint8_t i2c_transfert(uint8_t countMask) __attribute__((always_inline));
 
 // Functions that checks slave's Ack
-static inline bool i2c_checkAck(void) __attribute__((always_inline));
+static inline uint8_t i2c_checkAck(void) __attribute__((always_inline));
 
 // Fully implemented read/write functions
 static inline void i2c_send(uint8_t *data) __attribute__((always_inline));

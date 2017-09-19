@@ -31,8 +31,8 @@ void i2c_init(void) {
 	sbi(i2c_PORT, i2c_SCL_BIT);
 
 	// Pins as output
-	setDirOut(i2c_DIR, i2c_SDA_BIT);
-	setDirOut(i2c_DIR, i2c_SCL_BIT);
+	setPinOut(i2c_DIR, i2c_SDA_BIT);
+	setPinOut(i2c_DIR, i2c_SCL_BIT);
 }
 
 
@@ -89,13 +89,13 @@ uint8_t i2c_transfert(uint8_t countMask) {
 #define i2c_sendAck() USIDR = 0x00; i2c_transfert(i2c_Mode_1BIT);
 #define i2c_sendNack() USIDR = 0xFF; i2c_transfert(i2c_Mode_1BIT);
 
-bool i2c_checkAck(void) {
+uint8_t i2c_checkAck(void) {
 	// Rising edge on SCL
 	sbi(USICR, USITC);
 	_delay_us(2);
 
 	// Save bit state into var
-	bool bitState = readBit(i2c_PIN, i2c_SDA_BIT);
+	uint8_t bitState = readBit(i2c_PIN, i2c_SDA_BIT);
 
 	// Falling edge on SCL
 	sbi(USICR, USITC);

@@ -43,7 +43,7 @@
 
 
 
-/* USEFUL INCLUDES */
+/* REQUIREMENTS */
 
 // AVR ports, pins an registers definitions
 // io.h is device specific, common.h is ... common to all devices.
@@ -79,16 +79,6 @@ static inline void pwm_pin1B(uint16_t val) __attribute__((always_inline));
 
 
 
-/* TYPEDEF BOOLEAN */
-
-// Better than #include <stdbool.h>
-typedef enum {false, true} bool;
-
-#define false 0
-#define true 1
-
-
-
 /* CONSTANT DEFINITIONS */
 
 #define INPUT 0
@@ -116,8 +106,8 @@ typedef enum {false, true} bool;
 /* I/O FUNCTIONS */
 
 // Pin direction
-#define setDirIn(port, bit) (port &= ~(1<<bit))
-#define setDirOut(port, bit) (port |= (1<<bit))
+#define setPinIn(pin, bit) (pin &= ~(1<<bit))
+#define setPinOut(pin, bit) (pin |= (1<<bit))
 
 // Port direction
 #define setPortIn(port) (port = 0x00)
@@ -394,7 +384,7 @@ void pwm_pin0A(uint8_t val) {
 	OCR0A = val;
 
 	// Finally set the pin as output
-	setDirOut(OC0A_DDR, OC0A_BIT);
+	setPinOut(OC0A_DDR, OC0A_BIT);
 }
 
 void pwm_pin0B(uint8_t val) {
@@ -406,7 +396,7 @@ void pwm_pin0B(uint8_t val) {
 	OCR0B = val;
 
 	// Finally set the pin as output and high
-	setDirOut(OC0B_DDR, OC0B_BIT);
+	setPinOut(OC0B_DDR, OC0B_BIT);
 }
 
 
@@ -443,7 +433,7 @@ void pwm_pin1A(uint16_t val) {
 	#endif
 
 	// Finally set the pin as output
-	setDirOut(OC1A_DDR, OC1A_BIT);
+	setPinOut(OC1A_DDR, OC1A_BIT);
 }
 
 void pwm_pin1B(uint16_t val) {
@@ -466,7 +456,7 @@ void pwm_pin1B(uint16_t val) {
 	#endif
 
 	// Finally set the pin as output
-	setDirOut(OC1B_DDR, OC1B_BIT);
+	setPinOut(OC1B_DDR, OC1B_BIT);
 }
 
 
