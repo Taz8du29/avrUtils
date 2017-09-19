@@ -1,15 +1,15 @@
 /* register_mask.h
  *
  * Aliases for useful register masks
- * MCUs: AtTiny 2313a & 4313a
+ * MCUs: AtTiny 2313a & 4313
  *
  * Copyright 2017 (C) Taz8du29
  * Refer to LICENSE.md for more infos about copyright
 */
 
 
-#ifndef _MASK_ATTINY_2313A_4313A_H_
-#define _MASK_ATTINY_2313A_4313A_H_
+#ifndef _MASK_ATTINY_2313A_4313_H_
+#define _MASK_ATTINY_2313A_4313_H_
 
 
 /* 0x01 (0x21)
@@ -180,8 +180,8 @@
 #define USART_Rx_off (0<<4)
 
 // USART Transmitter enable/disable
-#define USART_Rx_on  (1<<3)
-#define USART_Rx_off (0<<3)
+#define USART_Tx_on  (1<<3)
+#define USART_Tx_off (0<<3)
 
 // USART Charater size (bit 2)
 #define USART_SizeB_5 (0<<2)
@@ -257,4 +257,4 @@
 #define PC_Int_0_off (0<<0)
 
 
-#endif  /* !_MASK_ATTINY_2313A_4313A_H_ */
+#endif  /* !_MASK_ATTINY_2313A_4313_H_ */
