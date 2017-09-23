@@ -25,37 +25,31 @@ void lcd_init(void) {
 	lcd_CMD_PORT |= ~(1<<lcd_RS) | ~(1<<lcd_RW) | ~(1<<lcd_EN);
 
 
+	// Set data port as output
 	#if ( lcd_mode == 8 )
-		// Set data port as output
 		setPortOut(lcd_DATA_DIR);
 		lcd_DATA_PORT = 0x00;
-
-		_delay_us(100);
-
-		// 8 bits mode, 2 lines of 8x5 matrixes
-		lcd_write(CMD, 0x38);
-		lcd_wait();
 	#else
-		// Set data port as output
 		lcd_DATA_DIR |= 0xF0;
 		lcd_DATA_PORT &= 0x0F;
-
-		_delay_us(100);
-
-		// 4 bits mode, 2 lines of 8x5 matrixes
-		lcd_write(CMD, 0x28);
-		lcd_wait();
 	#endif
 
+	_delay_us(100);
+
+	// Write number of lines, font (5x8 dots) and mode (8 or 4 bits)
+	lcd_write(CMD, (_lcd_linesCalc | _lcd_modeCalc | 0x20) );
+	lcd_wait();
 
 	// Display on, show static cursor
 	lcd_write(CMD, 0x0E);
 	lcd_wait();
+
 	// Write from Left to Right, no shift
 	lcd_write(CMD, 0x06);
 	lcd_wait();
+
 	// Clear the display
-	lcd_write(CMD, lcd_clearDisplay_CMD);
+	lcd_write(CMD, lcd_CMD_clearDisplay);
 	lcd_wait();
 }
 
@@ -136,14 +130,13 @@ uint8_t lcd_read(uint8_t mode) {
 
 
 void lcd_print(uint8_t* str, uint8_t line, uint8_t col) {
-	if ( line == 0 && col != -1 ) {
-		lcd_write(CMD, (0x80 + col));
+	// Addresses are sent to the display by setting the instruction register
+	// bits as follow : [7] = 1 & [6:0] = address
+	// Pre-computed values for different lines are set below.
+	const uint8_t line_list[4] = {0x80, 0xC0, 0x94, 0xD4};
+
+	lcd_write(CMD, (line_list[ line ] + col));
 		lcd_wait();
-	}
-	else if ( line == 1 && col != -1 ) {
-		lcd_write(CMD, (0xC0 + col));
-		lcd_wait();
-	}
 
 	while ( *str ) {
 		lcd_write(DATA, *str++);

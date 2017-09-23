@@ -26,19 +26,30 @@
 // Busy flag state (reading data.7)
 #define BF 0
 
+// Calculate the "number of lines" bit
+#define _lcd_linesCalc ((lcd_lines % 2) << 3)
+
+// Define 8-bits or 4-bits mode from user settings
+#define _lcd_modeCalc  ( ((lcd_mode == 4) ? 0 : 1) << 4)
 
 // Main commands
-#define lcd_clearDisplay_CMD 0x01
-#define lcd_returnHome_CMD   0x02
+#define lcd_CMD_clearDisplay 0x01
+#define lcd_CMD_returnHome   0x02
 
-// TODO :make commands for
-// Display on/off control = 0b00001 + D + C + B
+#define lcd_displayOn  (1<<1)
+#define lcd_displayOff (0<<1)
 
-// #define lcd_shiftCursorLeft  0x1 // 0b0001 1? 1? 00
-// #define lcd_shiftCursorRight 0x1 // 0b0001 1? 0? 00
+#define lcd_cursorOn  (1<<1)
+#define lcd_cursorOff (0<<1)
 
-#define lcd_setCGRAM_CMD 0x40
-#define lcd_setDDRAM_CMD 0x80
+#define lcd_blinkingOn  (1<<0)
+#define lcd_blinkingOff (0<<0)
+
+#define lcd_CMD_shiftCursorLeft  0x10
+#define lcd_CMD_shiftCursorRight 0x14
+
+#define lcd_CMD_shiftDisplayLeft  0x18
+#define lcd_CMD_shiftDisplayRight 0x1C
 
 
 

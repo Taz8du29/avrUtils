@@ -16,10 +16,11 @@
  * INTERRUPTS
 *******************************/
 
-// If you are using interrupts, it is recommended to disable them during
-// operations on 16 bits registers. Just uncomment the "pwm_interrupts" line
-// and every function using 16 bits registers will disable interrupts long
-// enough to operate.
+/* If you are using interrupts, it is recommended to disable them during
+ * operations on 16 bits registers. Just uncomment the "pwm_interrupts" line
+ * and every function using 16 bits registers will disable interrupts long
+ * enough to operate.
+*/
 
 // #define using_interrupts 1
 
@@ -46,7 +47,7 @@
  * FUSERESC
 *******************************/
 
-/* DO NOT EDIT THIS PINS AND PORTS CONFIG. */
+/* IT'S RECOMMENDED TO NOT EDIT THIS PINS AND PORTS CONFIG. */
 
 // Target's enable pin
 #define fresc_OE PD0
@@ -174,6 +175,9 @@
 
 // LCD mode : 4 or 8 bits
 #define lcd_mode 4
+
+// Number of lines on display : 1, 2 or 4
+#define lcd_lines 2
 
 // Data ports (bits [0-3] or [0-7] used)
 #define lcd_DATA_DIR	DDRB
